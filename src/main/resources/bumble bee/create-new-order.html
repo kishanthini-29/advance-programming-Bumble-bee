@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bumble bee|Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Confirm/Alert plugins -->
+    <link href="css/confirm.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-info   sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3"> User </div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Interface
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+
+        <!-- Nav Item - manage-user -->
+        <!--            <li class="nav-item">-->
+        <!--                <a class="nav-link" href="manage-user.html">-->
+        <!--                    <i class='fas fa-user-astronaut' style='font-size:18px'></i>-->
+        <!--                    <span>Users</span></a>-->
+        <!--            </li>-->
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="manage-product.html">
+                <i class='fas fa-shopping-cart' style='font-size:18px'></i>
+                <span>Manage Product</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="create-new-order.html">
+                <i class='fas fa-plus-circle' style='font-size:18px'></i>
+                <span>Create New Order</span></a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+    </ul>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="badge badge-pill badge-success" id ="showUserType" class="px-3"></span>  <span class="mr-2 d-none d-lg-inline text-gray-600 small px-1" id="logUserData"></span>
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4">  <select class="form-control form-control-md" id="myDropdown">
+                        <option selected>Select Product</option>
+                    </select></div>
+                    <div class="col-4">  <div class="form-group mx-sm-3 mb-2">
+                        <label for="qty" class="sr-only">Quantity</label>
+                        <input type="number" class="form-control" id="qty" placeholder="Quantity">
+                    </div></div>
+                    <div class="col-4"> <button type="button" class="btn btn-info" id="addProduct" onclick="addNewProduct();">Add Product</button></div>
+                </div>
+                <!-- Product  DETAIL Table -->
+                <div class="card shadow mb-4 mt-3">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Create New Order </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="productInformation" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Product  Id</th>
+                                    <th>Product Name</th>
+                                    <th>Brand Name</th>
+                                    <th>Category Name</th>
+                                    <th>Qty</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pl-4" >
+                    <h4 id ="totalLoan">Grand Total: Rs.</h4>
+                </div>
+
+
+                <div class="row pl-4 pt-3 pb-3" >
+                    <span >Select Payment Method</span>
+                    </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="myRadio" id="exampleRadios1" value="Card" onchange="getValue(e)" >
+                    <label class="form-check-label" for="exampleRadios1"> Card
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="myRadio" id="exampleRadios2" value="Bumble Bee">
+                    <label class="form-check-label" for="exampleRadios2">Bumble Bee
+                    </label>
+                </div>
+
+                <div class="row pt-4 pl-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                        Place Order
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Payment Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="">
+                                    <span id="userLocal">Hi ..</span>
+                                    <hr>
+                                    <div class="row pb-3">
+                                        <div class="col">
+                                            <small>Payment Method</small>
+                                            <br>
+                                            <span class="pt-2 text-primary" id="radioCheck"></span>
+                                        </div>
+                                        <div class="col">
+                                            <i class='fas fa-shopping-cart px-2' style='font-size:18px'></i>  <span>Rs.</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered " id="proName" width="100%" cellspacing="0">
+                                            <thead class="table-active">
+                                            <tr>
+                                                <th>Product  Id</th>
+                                                <th>Product Name</th>
+                                                <th>Sub Total</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="payId">Pay Now</button>
+                                </div>
+                                <br>
+                                <div class="pl-4 pr-4">
+                                <div class="alert alert-success" role="alert" id="myAlert">
+                                    Payment Success !    <i class='fas fa-check-circle px-2' style='font-size:18px'></i>
+                                </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Bumble bee Online Loan Service</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+
+
+
+
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+
+                <a class="btn btn-info" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/chart.js/Chart.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
+<script src="js/custom/manage-Product .js"></script>
+<script>
+$(document).ready(function () {
+	$.ajax({
+          type: 'POST',
+          dataType:"json",
+          url: 'http://localhost:8080/get/all/products',
+          headers:{
+              'Content-Type' : 'application/json',
+          },
+          success: function (data) {
+            console.log('data: ', data);
+		  if(data.status == 3000){
+             console.log(data.value)
+             var dataValue = data.value
+          for (var i = 0; i < dataValue.length; i++){
+           $('#myDropdown').append($('<option></option>').val(dataValue[i].productId).html(dataValue[i].productName))
+          }
+		  }else{
+				alert(data.msg);
+		  }
+          }
+});
+
+var user =localStorage.getItem("firstName");
+
+ $("#userLocal").append(user);
+
+  var userName = localStorage.getItem("lastName");
+     var userLog = document.getElementById('logUserData');
+     userLog.innerHTML = userName;
+
+     if(localStorage.getItem("userType") === '2' ){
+     console.log("sdsd");
+     $("#showUserType").append("Customer");
+     }
+});
+
+
+document.getElementById("myDropdown").addEventListener("change", function() {
+  var selectedValue = this.value;
+  localStorage.setItem("dropdownSelect",selectedValue);
+  console.log("Selected value: " + selectedValue);
+});
+
+const radioButtons = document.getElementsByName('myRadio');
+
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', event => {
+    console.log(event.target.value);
+localStorage.setItem("radioCheckValue",event.target.value);
+
+var radio =localStorage.getItem("radioCheckValue");
+  $("#radioCheck").append(radio);
+  });
+});
+
+function addNewProduct(){
+	var qty = document.getElementById('qty');
+	var productId = localStorage.getItem("dropdownSelect");
+	const totalPost = {qty: qty.value,productId: productId};
+
+    console.log(totalPost)
+
+$.ajax({
+          type: 'POST',
+          dataType:"json",
+          url: 'http://localhost:8080/get/order/single/request',
+          data: JSON.stringify(totalPost),
+          headers:{
+              'Content-Type' : 'application/json',
+          },
+          success: function (data) {
+            console.log('data: ', data);
+
+            if(data.status == 3000){
+             console.log(data.value)
+             var dataValue = data.value;
+             console.log(dataValue.brandName);
+                 console.log(dataValue.brandName);
+                 var row = "<tr>" +
+                  "<td>" + dataValue.productId + "</td>" +
+                  "<td>" + dataValue.productName + "</td>" +
+                  "<td>" + dataValue.brandName + "</td>" +
+                  "<td>" + dataValue.categoryName + "</td>" +
+                   "<td>" + dataValue.qty + "</td>" +
+                  "<td class='sum-count'>" + dataValue.subTotal + "</td>" +
+                "</tr>";
+           $("#productInformation tbody").append(row);
+
+var payRow = "<tr>" +
+                  "<td>" + dataValue.productId + "</td>" +
+                  "<td>" + dataValue.productName + "</td>" +
+                  "<td class='sum-count'>" + dataValue.subTotal + "</td>" +
+                "</tr>";
+           $("#proName").append(payRow);
+
+var total =0;
+$("#productInformation tbody tr td.sum-count").each(function(){
+var value=parseFloat($(this).textContent);
+total +=value;
+
+});
+console.log(total);
+var arr =[];
+arr.push(total);
+localStorage.setItem("totalData",total);
+var get=localStorage.getItem("totalData");
+ $("#totalLoan").append(get);
+if(total <= 15000){
+alert("success");
+
+}else{
+
+}
+
+			}else{
+				alert(data.msg);
+			}
+
+          }
+});
+}
+</script>
+</body>
+
+</html>

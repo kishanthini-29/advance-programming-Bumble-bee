@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Bumble Bee | Login Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+   a{
+    text-decoration:none;
+    color:black;
+   }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<section class="vh-80" >
+    <div class="container py-5 h-80">
+        <div class="row d-flex justify-content-center align-items-center h-80">
+            <div class="col col-xl-10">
+                <div class="card shadow" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block pb-5">
+<br><br>
+                            <img src="https://img.freepik.com/free-vector/global-data-security-personal-data-security-cyber-data-security-online-concept-illustration-internet-security-information-privacy-protection_1150-37336.jpg?w=740&t=st=1680361013~exp=1680361613~hmac=adcc83a868160c4b64fc25b6b4cc0cf8bd13d88e96b16a4f523d8cceb2788575"
+                                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+
+                                <form>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                                    <div class="form-outline mb-4">
+
+                                        <label class="form-label" for="username">User Name</label>
+                                        <input type="text" id="username" class="form-control form-control-lg" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" id="password" class="form-control form-control-lg" />
+                                    </div>
+
+                                    <div class="pt-1 mb-4">
+                                        <button class="btn btn-dark btn-lg btn-block" value="Login" id="btnlogin" onclick="loginUser();" type="button">Login</button>
+                                    </div>
+
+
+                                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="register.html"
+                                                                                                              style="color: #393f81;">Register here</a></p>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+function loginUser(){
+	var username = document.getElementById('username');
+	var password = document.getElementById('password');
+
+	console.log(username.value);
+	console.log(password.value);
+	const loginRequestObject = {username: username.value, password: password.value};
+
+	$.ajax({
+          type: 'POST',
+          dataType:"json",
+          url: 'http://localhost:8080/user/login',
+          data: JSON.stringify(loginRequestObject),
+          headers:{
+              'Content-Type' : 'application/json',
+          },
+          success: function (data) {
+            console.log('data: ', data);
+			if(data.status == 3000){
+				localStorage.setItem("firstName",data.value.firstName);
+				localStorage.setItem("lastName",data.value.lastName);
+				localStorage.setItem("userId",data.value.userId);
+				localStorage.setItem("userType",data.value.userType);
+
+               if(data.value.userType == 2){
+	              window.location.href = "userDashboard.html";
+               }else{
+	              window.location.href = "dashboard.html";
+               }
+			}else{
+				alert(data.msg);
+			}
+          }
+});
+}
+
+function register(){
+	var userName = document.getElementById('userName');
+	const registerRequest = {userName: userName.value};
+
+    console.log(registerRequest)
+
+$.ajax({
+          type: 'POST',
+          dataType:"json",
+          url: 'http://localhost:8080/create/new/user',
+          data: JSON.stringify(registerRequest),
+          headers:{
+              'Content-Type' : 'application/json',
+          },
+          success: function (data) {
+            console.log('data: ', data);
+
+
+          }
+});
+}
+
+</script>
+</body>
+</html>
