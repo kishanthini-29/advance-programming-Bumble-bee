@@ -34,19 +34,18 @@
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account !</h1>
                             </div>
                             <form class="user" id="userCreateForm">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="firstName"
+
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <input type="text" class="form-control " id="firstName"
                                             placeholder="First Name">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="lastName"
+                                    <div class="col-12 pt-3">
+                                        <input type="text" class="form-control " id="lastName"
                                             placeholder="Last Name">
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
+
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
                                         <select class="custom-select custom-select-md mb-3" id="userType">
                                             <option selected>User Type</option>
                                             <option value="1">Admin</option>
@@ -54,43 +53,65 @@
                                         </select>
 
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user"
+                                    <div class="col-12 mb-3 mb-sm-0 ">
+                                        <input type="text" class="form-control "
                                                id="userName" placeholder="user Name">
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
 
-                                    <div class="col-sm-6">
-                                        <input type="email" class="form-control form-control-user"
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <input type="date" class="form-control "
+                                               id="dob" placeholder="Date Of Birth">
+                                    </div>
+
+                                    <div class="col-12 pt-3">
+                                        <input type="email" class="form-control "
                                                id="userEmail" placeholder="User Email">
                                     </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user"
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <input type="text" class="form-control"
                                                id="userMobileNumber" placeholder="Mobile Number">
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user"
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <input type="text" class="form-control"
                                                id="nic" placeholder="Nic">
                                     </div>
 
+                                <div id="my-div">
+
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <input type="number" class="form-control"
+                                               id="loanBalance" placeholder="Loan Balance">
+                                    </div>
+
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <input type="number" class="form-control"
+                                               id="usedAmount" placeholder="Used Amount">
+                                    </div>
+
+
+                                    <div class="col-12 mb-3 mb-sm-0 pt-3">
+                                        <select class="custom-select custom-select-md mb-3" id="installPlan">
+                                            <option selected>Select Installment Plan</option>
+                                            <option value="1">1000-5000-5000</option>
+                                            <option value="2">10000-5000-5000</option>
+                                        </select>
+
+                                    </div>
                                 </div>
+
                                 <div class="d-flex justify-content-center">
-                                <div class=" row">
+                                    <div id="your-alert-container"></div>
+                                <div class=" row pt-3">
 
                                 <button class="btn btn-primary btn-user btn-block" id="btnRegisterUser" onclick="register();"  >
                                     Create Account
                                 </button>
                                     </div>
                                 </div>
-                                <hr>
                             </form>
-                            <hr>
-                            <div class="text-center">
+                            <div class="text-center pt-3">
                                 <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
                         </div>
@@ -102,8 +123,21 @@
 
     <script type="text/javascript">
 
+   const userTypeSelect =document.getElementById('userType');
+   const myDiv = document.getElementById('my-div');
+   userTypeSelect.addEventListener('change',function(){
+   if(userTypeSelect.value === '2'){
+     myDiv.style.display = 'block';
+   }else{
+     myDiv.style.display = 'none';
+   }
+
+   });
+
+
+
 function register(){
-console.log("fdfs")
+
 	var firstName = document.getElementById('firstName');
 	var lastName = document.getElementById('lastName');
 	var userType = document.getElementById('userType');
@@ -111,13 +145,14 @@ console.log("fdfs")
 	var userEmail = document.getElementById('userEmail');
 	var userMobileNumber = document.getElementById('userMobileNumber');
 	var nic = document.getElementById('nic');
+	var dob = document.getElementById('dob');
+	var loanBalance = document.getElementById('loanBalance');
+	var usedAmount = document.getElementById('usedAmount');
+	var installPlan = document.getElementById('installPlan');
 
+	const loginRequestObject = {firstName: firstName.value, lastName: lastName.value,userType: userType.value,userName: userName.value, userEmail: userEmail.value,userMobileNumber: userMobileNumber.value, nic: nic.value,dob: dob.value,installPlan: installPlan.value,usedAmount: usedAmount.value,loanBalance: loanBalance.value};
 
-	const loginRequestObject = {firstName: firstName.value, lastName: lastName.value,userType: userType.value,userName: userName.value, userEmail: userEmail.value,userMobileNumber: userMobileNumber.value, nic: nic.value};
-
-    console.log(loginRequestObject)
-
-	$.ajax({
+$.ajax({
           type: 'POST',
           dataType:"json",
           url: 'http://localhost:8080/create/new/user',
@@ -126,28 +161,17 @@ console.log("fdfs")
               'Content-Type' : 'application/json',
           },
           success: function (data) {
-            console.log('data: ', data);
 			if(data.status == 3000){
-             console.log(data)
-             alert("success")
+            console.log(data);
 
+            var alert = $("<div>").addClass("alert alert-success").text("Success!");
+            $("#your-alert-container").append(alert);
 			}else{
 				alert(data.msg);
 			}
           }
 });
 }
-
-<!--            <input type="text" placeholder="First Name" id="firstName">-->
-<!--            <input type="text" placeholder="Last Name" id="lastName">-->
-<!--            <input type="text" placeholder="dateOfBirth" id="dateOfBirth">-->
-<!--            <input type="text" placeholder="userType" id="userType">-->
-<!--            <input type="text" placeholder="User Name" id="userName">-->
-<!--            <input type="text" placeholder="Password" id="secretKey">-->
-<!--            <input type="text" placeholder="User Email" id="userEmail">-->
-<!--            <input type="text" placeholder="Mobile Number" id="userMobileNumber">-->
-<!--            <input type="text" placeholder="NIC" id="nic">-->
-<!--            <input type="button" value="Register" onclick="register();">-->
 
 
 </script>

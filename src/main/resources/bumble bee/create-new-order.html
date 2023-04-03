@@ -133,8 +133,11 @@
                         <label for="qty" class="sr-only">Quantity</label>
                         <input type="number" class="form-control" id="qty" placeholder="Quantity">
                     </div></div>
+
                     <div class="col-4"> <button type="button" class="btn btn-info" id="addProduct" onclick="addNewProduct();">Add Product</button></div>
                 </div>
+
+                <div id="your-alert-container"></div>
                 <!-- Product  DETAIL Table -->
                 <div class="card shadow mb-4 mt-3">
                     <div class="card-header py-3">
@@ -207,7 +210,7 @@
                                             <span class="pt-2 text-primary" id="radioCheck"></span>
                                         </div>
                                         <div class="col">
-                                            <i class='fas fa-shopping-cart px-2' style='font-size:18px'></i>  <span>Rs.</span>
+                                            <i class='fas fa-shopping-cart px-2' style='font-size:18px'></i>  <span id="totalProc">Rs.</span>
                                         </div>
 
                                     </div>
@@ -229,13 +232,13 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" id="payId">Pay Now</button>
+                                    <button type="button" class="btn btn-primary" id="payId" onclick="addClickShow()">Pay Now</button>
                                 </div>
                                 <br>
-                                <div class="pl-4 pr-4">
-                                <div class="alert alert-success" role="alert" id="myAlert">
-                                    Payment Success !    <i class='fas fa-check-circle px-2' style='font-size:18px'></i>
-                                </div>
+                                <div class="pl-4 pr-4" id="showAlert">
+<!--                                <div class="alert alert-success" role="alert" id="myAlert">-->
+<!--                                    Payment Success !    <i class='fas fa-check-circle px-2' style='font-size:18px'></i>-->
+<!--                                </div>-->
                                     </div>
                             </div>
                         </div>
@@ -369,7 +372,18 @@ var radio =localStorage.getItem("radioCheckValue");
   $("#radioCheck").append(radio);
   });
 });
+ function addClickShow(){
+   var alert = $("<div>").addClass("alert alert-success").text("Payment Success !!");
+                  $("#showAlert").append(alert);
 
+                    setTimeout(function() {
+                    alert.remove();
+                    }, 2000);
+ }
+
+let buttonClickData = [];
+
+let allButtonClickData = [];
 function addNewProduct(){
 	var qty = document.getElementById('qty');
 	var productId = localStorage.getItem("dropdownSelect");
@@ -386,13 +400,8 @@ $.ajax({
               'Content-Type' : 'application/json',
           },
           success: function (data) {
-            console.log('data: ', data);
-
             if(data.status == 3000){
-             console.log(data.value)
              var dataValue = data.value;
-             console.log(dataValue.brandName);
-                 console.log(dataValue.brandName);
                  var row = "<tr>" +
                   "<td>" + dataValue.productId + "</td>" +
                   "<td>" + dataValue.productName + "</td>" +
@@ -401,39 +410,56 @@ $.ajax({
                    "<td>" + dataValue.qty + "</td>" +
                   "<td class='sum-count'>" + dataValue.subTotal + "</td>" +
                 "</tr>";
-           $("#productInformation tbody").append(row);
-
-var payRow = "<tr>" +
+               $("#productInformation tbody").append(row);
+               var payRow = "<tr>" +
                   "<td>" + dataValue.productId + "</td>" +
                   "<td>" + dataValue.productName + "</td>" +
                   "<td class='sum-count'>" + dataValue.subTotal + "</td>" +
                 "</tr>";
-           $("#proName").append(payRow);
+               $("#proName").append(payRow);
 
-var total =0;
-$("#productInformation tbody tr td.sum-count").each(function(){
-var value=parseFloat($(this).textContent);
-total +=value;
 
-});
-console.log(total);
-var arr =[];
-arr.push(total);
-localStorage.setItem("totalData",total);
-var get=localStorage.getItem("totalData");
- $("#totalLoan").append(get);
-if(total <= 15000){
-alert("success");
+  buttonClickData.push(dataValue.subTotal);
+  console.log(buttonClickData);
 
-}else{
+  allButtonClickData.push(buttonClickData);
+            buttonClickData = [];
+            let sumdm = 0;
 
+for (let i = 0; i < buttonClickData.length; i++) {
+  for (let j = 0; j < buttonClickData[i].length; j++) {
+    sumdm += buttonClickData[i][j];
+  }
 }
 
-			}else{
-				alert(data.msg);
-			}
+console.log(sumdm); // Output: 10800
+             console.log(allButtonClickData);
+              var sum = 0;
+  for (var i = 0; i < allButtonClickData.length; i++) {
+<!--    sum += allButtonClickData[i];-->
+for (var a = 0; a < allButtonClickData[i].length; a++) {
+sum += allButtonClickData[i][a];
 
-          }
+  }
+  console.log( sum);
+  localStorage.setItem("totalAmountData",sum);
+  var a =localStorage.getItem("totalAmountData");
+  $('#totalLoan').append(a);
+  $('#totalProc').append(a);
+}
+              }else if(data.status == 3005){
+		         console.log("max-1");
+		          var alert = $("<div>").addClass("alert alert-warning").text("Only  You Can Purchase of the Product Quantity is 1 !!");
+                  $("#your-alert-container").append(alert);
+
+                    setTimeout(function() {
+                    alert.remove();
+                    }, 2000);
+		      }else{
+		      alert(data.msg);
+		      }
+		   }
+
 });
 }
 </script>
