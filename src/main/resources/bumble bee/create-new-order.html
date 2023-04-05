@@ -136,7 +136,7 @@
 
                     <div class="col-4"> <button type="button" class="btn btn-info" id="addProduct" onclick="addNewProduct();">Add Product</button></div>
                 </div>
-
+                <div id="amount-ex"></div>
                 <div id="your-alert-container"></div>
                 <!-- Product  DETAIL Table -->
                 <div class="card shadow mb-4 mt-3">
@@ -319,6 +319,7 @@
 <script src="js/custom/manage-Product .js"></script>
 <script>
 $(document).ready(function () {
+localStorage.removeItem("amount");
 	$.ajax({
           type: 'POST',
           dataType:"json",
@@ -339,6 +340,10 @@ $(document).ready(function () {
 		  }
           }
 });
+
+
+
+
 
 var user =localStorage.getItem("firstName");
 
@@ -381,9 +386,7 @@ var radio =localStorage.getItem("radioCheckValue");
                     }, 2000);
  }
 
-let buttonClickData = [];
 
-let allButtonClickData = [];
 function addNewProduct(){
 	var qty = document.getElementById('qty');
 	var productId = localStorage.getItem("dropdownSelect");
@@ -401,6 +404,9 @@ $.ajax({
           },
           success: function (data) {
             if(data.status == 3000){
+            var a = localStorage.getItem("amount");
+            if(a <= 15000){
+
              var dataValue = data.value;
                  var row = "<tr>" +
                   "<td>" + dataValue.productId + "</td>" +
@@ -418,35 +424,37 @@ $.ajax({
                 "</tr>";
                $("#proName").append(payRow);
 
+         var table = document.getElementById("productInformation");
 
-  buttonClickData.push(dataValue.subTotal);
-  console.log(buttonClickData);
+         var numRows = table.rows.length;
+         var sum = 0;
 
-  allButtonClickData.push(buttonClickData);
-            buttonClickData = [];
-            let sumdm = 0;
+         for (var i = 1; i < numRows; i++) {
 
-for (let i = 0; i < buttonClickData.length; i++) {
-  for (let j = 0; j < buttonClickData[i].length; j++) {
-    sumdm += buttonClickData[i][j];
-  }
-}
+         var cellValue = parseFloat(table.rows[i].cells[5].innerHTML);
 
-console.log(sumdm); // Output: 10800
-             console.log(allButtonClickData);
-              var sum = 0;
-  for (var i = 0; i < allButtonClickData.length; i++) {
-<!--    sum += allButtonClickData[i];-->
-for (var a = 0; a < allButtonClickData[i].length; a++) {
-sum += allButtonClickData[i][a];
+         sum += cellValue;
 
-  }
-  console.log( sum);
-  localStorage.setItem("totalAmountData",sum);
-  var a =localStorage.getItem("totalAmountData");
-  $('#totalLoan').append(a);
-  $('#totalProc').append(a);
-}
+
+         }
+        localStorage.setItem("amount",sum);
+        var b =localStorage.getItem("amount");
+
+
+        document.getElementById("totalProc").innerHTML = sum.toFixed(2);
+        document.getElementById("totalLoan").innerHTML = sum.toFixed(2);
+
+
+       }else{
+       var alert = $("<div>").addClass("alert alert-warning").text("You can Only Purchase LKR 15,000 Only !!");
+                  $("#amount-ex").append(alert);
+
+                    setTimeout(function() {
+                    alert.remove();
+                    }, 2000);
+        document.getElementById("addProduct").disabled=true;
+       }
+
               }else if(data.status == 3005){
 		         console.log("max-1");
 		          var alert = $("<div>").addClass("alert alert-warning").text("Only  You Can Purchase of the Product Quantity is 1 !!");
