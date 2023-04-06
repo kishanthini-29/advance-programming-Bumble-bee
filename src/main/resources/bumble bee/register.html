@@ -126,11 +126,11 @@
    const userTypeSelect =document.getElementById('userType');
    const myDiv = document.getElementById('my-div');
    userTypeSelect.addEventListener('change',function(){
-   if(userTypeSelect.value === '2'){
-     myDiv.style.display = 'block';
-   }else{
-     myDiv.style.display = 'none';
-   }
+<!--   if(userTypeSelect.value === '2'){-->
+<!--     myDiv.style.display = 'block';-->
+<!--   }else{-->
+<!--     myDiv.style.display = 'none';-->
+<!--   }-->
 
    });
 
@@ -151,8 +151,15 @@ function register(){
 	var installPlan = document.getElementById('installPlan');
 
 	const loginRequestObject = {firstName: firstName.value, lastName: lastName.value,userType: userType.value,userName: userName.value, userEmail: userEmail.value,userMobileNumber: userMobileNumber.value, nic: nic.value,dob: dob.value,installPlan: installPlan.value,usedAmount: usedAmount.value,loanBalance: loanBalance.value};
+    var birthdate = new Date(document.getElementById("dob").value);
 
-$.ajax({
+    var ageInMilliseconds = Date.now() - birthdate.getTime();
+    var ageInYears = ageInMilliseconds / 1000 / 60 / 60 / 24 / 365.25;
+
+     if (ageInYears <= 18) {
+    alert("Sorry, you must be at least 18 years old to access this content.");
+     }else {
+   $.ajax({
           type: 'POST',
           dataType:"json",
           url: 'http://localhost:8080/create/new/user',
@@ -171,6 +178,9 @@ $.ajax({
 			}
           }
 });
+}
+
+
 }
 
 
